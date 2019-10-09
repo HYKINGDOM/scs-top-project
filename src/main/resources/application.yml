@@ -1,0 +1,38 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: scs-top-project
+  profiles:
+    active: dev
+
+
+mybatis:
+  # 对应的实体类的包路径
+  type-aliases-package: com.scs.top.project
+  configuration:
+    # 映射驼峰大小写
+    map-underscore-to-camel-case: true
+    # 默认提取大小
+    default-fetch-size: 100
+    # 默认超时时间
+    default-statement-timeout: 30
+    # 全局映射缓存
+    cache-enabled: true
+    # 允许生成主键
+    use-generated-keys: true
+    # 配置默认的执行器
+    default-executor-type: reuse
+    # 配置具体的日志实现
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    # 如果查询为null,字段依然显示
+    call-setters-on-nulls: true
+  #配置mapper.xml路径
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+# 分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
