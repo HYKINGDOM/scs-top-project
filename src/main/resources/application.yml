@@ -1,3 +1,9 @@
+
+scs:
+  name: scs
+  version: 1.0
+  addressEnabled: true
+
 server:
   port: 8001
 spring:
@@ -5,7 +11,6 @@ spring:
     name: scs-top-project
   profiles:
     active: dev
-
 
 mybatis:
   # 对应的实体类的包路径

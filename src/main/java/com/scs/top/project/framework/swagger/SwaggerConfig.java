@@ -34,7 +34,6 @@ public class SwaggerConfig {
                 .select()
                 // 指定扫描路径
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                //.apis(RequestHandlerSelectors.basePackage("com.isoftstone.pmit.framework.swagger"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -46,8 +45,8 @@ public class SwaggerConfig {
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 .title(projectName)
-                .description("描述：项目管理")
-                .contact(new Contact("质量部", null, null))
+                .description("描述：scs-top-project")
+                .contact(new Contact("scs", null, null))
                 .version("版本号:" + projectVersion)
                 .build();
     }

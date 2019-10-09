@@ -4,9 +4,12 @@ package com.scs.top.project.framework.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author yihur
+ */
 @Component
-@ConfigurationProperties(prefix = "pmit")
-public class PmitConfig {
+@ConfigurationProperties(prefix = "scs")
+public class ScsConfig {
 
     /**
      * 项目名称
@@ -43,7 +46,7 @@ public class PmitConfig {
     }
 
     public void setAddressEnabled(boolean addressEnabled) {
-        PmitConfig.addressEnabled = addressEnabled;
+        ScsConfig.addressEnabled = addressEnabled;
     }
 
 }
