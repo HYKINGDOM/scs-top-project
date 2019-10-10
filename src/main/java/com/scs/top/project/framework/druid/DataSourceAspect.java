@@ -23,7 +23,7 @@ public class DataSourceAspect implements Ordered {
     /**
      * 注意：这里的xxxx代表的是上面public @interface DataSource这个注解DataSource的包名
      */
-    @Pointcut("@annotation(com.isoftstone.magits.framework.druid.DataSourceTransaction)")
+    @Pointcut("@annotation(com.scs.top.project.framework.druid.DataSourceTransaction)")
     public void dataSourcePointCut() {
 
     }

@@ -11,8 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.isoftstone.pmit.common.util.PropertyUtil;
-import com.isoftstone.pmit.system.user.entity.User;
+import com.scs.top.project.common.util.PropertyUtil;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.Session;
@@ -24,8 +23,8 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.isoftstone.pmit.common.util.IpUtils.getIpAddr;
-import static com.isoftstone.pmit.framework.shiro.ShiroUtils.*;
+import static com.scs.top.project.common.util.IpUtils.getIpAddr;
+import static com.scs.top.project.framework.shiro.ShiroUtils.*;
 
 /**
  * 自定义过滤器，进行用户访问控制

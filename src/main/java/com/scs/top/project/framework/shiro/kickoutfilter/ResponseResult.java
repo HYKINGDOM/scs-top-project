@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 前端请求响应结果,code:编码,message:描述,obj对象，可以是单个数据对象，数据列表或者PageInfo
  *
- * @author hy852
+ * @author yihur
  */
 public class ResponseResult implements Serializable {
 

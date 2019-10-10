@@ -1,7 +1,7 @@
 package com.scs.top.project.framework.config.submitcheck;
 
 import com.google.common.cache.Cache;
-import com.isoftstone.pmit.common.util.AjaxResult;
+import com.scs.top.project.common.util.AjaxResult;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
