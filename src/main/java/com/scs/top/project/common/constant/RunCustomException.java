@@ -2,6 +2,7 @@ package com.scs.top.project.common.constant;
 
 /**
  * 自定义异常
+ * @author yihur
  */
 public class RunCustomException extends RuntimeException {
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,7 @@
 package com.scs.top.project.common.constant;
 /**
  * 任务调度通用常量
+ * @author yihur
  */
 public interface ScheduleConstants {
     public static final String TASK_CLASS_NAME = "__TASK_CLASS_NAME__";

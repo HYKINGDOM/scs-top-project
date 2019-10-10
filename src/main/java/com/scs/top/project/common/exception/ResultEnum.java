@@ -1,5 +1,8 @@
 package com.scs.top.project.common.exception;
 
+/**
+ * @author yihur
+ */
 public enum ResultEnum {
     UNKONW_ERROR(-1,"未知错误"),
     SUCCESS(0,"成功"),

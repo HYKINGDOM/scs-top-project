@@ -2,6 +2,7 @@ package com.scs.top.project.common.constant;
 
 /**
  * redis设置时的常量
+ * @author yihur
  */
 public class RedisConstans {
 

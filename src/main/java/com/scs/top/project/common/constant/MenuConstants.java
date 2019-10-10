@@ -2,6 +2,7 @@ package com.scs.top.project.common.constant;
 
 /**
  * 菜单常量
+ * @author yihur
  */
 public class MenuConstants {
 

@@ -19,9 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * @项目名称：wyait-manage
- * @包名：com.wyait.manage.web.error
- * @类描述：普通请求统一使用error页面处理，异步请求，返回统一的Result(status,message,data)对象
+ * 普通请求统一使用error页面处理，异步请求，返回统一的Result(status,message,data)对象
+ * @author yihur
  */
 @Controller
 @RequestMapping("error")
@@ -32,8 +31,6 @@ public class GlobalErrorController extends AbstractErrorController {
 
     private static final String ERROR_PATH = "error";
 
-
-    //构造
     public GlobalErrorController(ErrorAttributes errorAttributes) {
         super(errorAttributes);
     }
