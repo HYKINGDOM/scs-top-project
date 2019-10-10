@@ -29,7 +29,7 @@ import java.util.concurrent.Callable;
  * @author Administrator
  */
 @RestController
-@RequestMapping(value = "/pmit-project-scs")
+@RequestMapping(value = "/scs-top/scs")
 public class ScsController extends AbstractCustomResult {
 
     @Autowired

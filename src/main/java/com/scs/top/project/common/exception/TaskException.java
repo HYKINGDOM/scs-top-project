@@ -3,7 +3,7 @@ package com.scs.top.project.common.exception;
 /**
  * 计划策略异常
  *
- * @author yihur 
+ * @author yihur
  */
 public class TaskException extends Exception {
     private static final long serialVersionUID = 1L;
