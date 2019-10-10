@@ -13,14 +13,17 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author Administrator
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${PMIT.name}")
+    @Value("${scs.name}")
     private String projectName;
 
-    @Value("${PMIT.version}")
+    @Value("${scs.version}")
     private String projectVersion;
 
 

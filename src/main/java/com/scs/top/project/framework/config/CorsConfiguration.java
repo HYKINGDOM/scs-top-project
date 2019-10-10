@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.*;
  * @author yihur
  */
 @Configuration
-public class CORSConfiguration implements WebMvcConfigurer {
+public class CorsConfiguration implements WebMvcConfigurer {
 
     /**
      * 跨域支持

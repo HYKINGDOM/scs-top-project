@@ -1,8 +1,7 @@
 package com.scs.top.project.common.web.controller;
 
-import com.isoftstone.pmit.common.util.AjaxResult;
-import com.isoftstone.pmit.framework.shiro.ShiroUtils;
-import com.isoftstone.pmit.system.user.entity.User;
+
+import com.scs.top.project.common.util.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -82,20 +81,5 @@ public abstract class AbstractController {
     protected AjaxResult error(int code, String message) {
         return AjaxResult.error(code, message);
     }
-
-    public User getSysUser() {
-        return ShiroUtils.getSysUser();
-    }
-
-    public Integer getUserId()
-    {
-        return getSysUser().getUserId();
-    }
-
-
-    public void setSysUser(User user) {
-        ShiroUtils.setSysUser(user);
-    }
-
 
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * 配置多数据源 事务管理
+ * @author Administrator
  */
 @Configuration
 public class TransactionConfig {
@@ -22,14 +23,12 @@ public class TransactionConfig {
     @Primary
     @Bean(name= TransactionConfig.FIRST_TX)
     public PlatformTransactionManager firstTxTransaction(@Qualifier(DataSourceNames.FIRST) DataSource masterDataSource){
-        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(masterDataSource);
-        return dataSourceTransactionManager;
+        return new DataSourceTransactionManager(masterDataSource);
     }
 
     @Bean(name= TransactionConfig.SECOND_TX)
     public PlatformTransactionManager secondTxTransaction(@Qualifier(DataSourceNames.SECOND) DataSource slaveDataSource){
-        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(slaveDataSource);
-        return dataSourceTransactionManager;
+        return new DataSourceTransactionManager(slaveDataSource);
     }
 
 

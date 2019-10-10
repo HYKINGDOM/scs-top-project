@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 多数据源切换
+ * @author Administrator
  */
 @Aspect
 @Component
@@ -20,9 +21,6 @@ public class DataSourceAspect implements Ordered {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * 注意：这里的xxxx代表的是上面public @interface DataSource这个注解DataSource的包名
-     */
     @Pointcut("@annotation(com.scs.top.project.framework.druid.DataSourceTransaction)")
     public void dataSourcePointCut() {
 

@@ -519,8 +519,8 @@ public class Convert {
         }
         if (clazz.isAssignableFrom(value.getClass())) {
             @SuppressWarnings("unchecked")
-            E myE = (E) value;
-            return myE;
+            E mye = (E) value;
+            return mye;
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
@@ -747,8 +747,8 @@ public class Convert {
      * @param input String.
      * @return 全角字符串.
      */
-    public static String toSBC(String input) {
-        return toSBC(input, null);
+    public static String toSbc(String input) {
+        return toSbc(input, null);
     }
 
     /**
@@ -758,8 +758,8 @@ public class Convert {
      * @param notConvertSet 不替换的字符集合
      * @return 全角字符串.
      */
-    public static String toSBC(String input, Set<Character> notConvertSet) {
-        char c[] = input.toCharArray();
+    public static String toSbc(String input, Set<Character> notConvertSet) {
+        char[] c = input.toCharArray();
         for (int i = 0; i < c.length; i++) {
             if (null != notConvertSet && notConvertSet.contains(c[i])) {
                 // 跳过不替换的字符
@@ -782,8 +782,8 @@ public class Convert {
      * @param input String.
      * @return 半角字符串
      */
-    public static String toDBC(String input) {
-        return toDBC(input, null);
+    public static String toDbc(String input) {
+        return toDbc(input, null);
     }
 
     /**
@@ -793,8 +793,8 @@ public class Convert {
      * @param notConvertSet 不替换的字符集合
      * @return 替换后的字符
      */
-    public static String toDBC(String text, Set<Character> notConvertSet) {
-        char c[] = text.toCharArray();
+    public static String toDbc(String text, Set<Character> notConvertSet) {
+        char[] c = text.toCharArray();
         for (int i = 0; i < c.length; i++) {
             if (null != notConvertSet && notConvertSet.contains(c[i])) {
                 // 跳过不替换的字符
@@ -807,9 +807,8 @@ public class Convert {
                 c[i] = (char) (c[i] - 65248);
             }
         }
-        String returnString = new String(c);
 
-        return returnString;
+        return new String(c);
     }
 
     /**

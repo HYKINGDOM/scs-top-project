@@ -52,7 +52,6 @@ public class PropertyUtil {
                 logger.error("properties close Exception!");
             }
         }
-        //logger.info(String.valueOf(props));
         logger.info("load properties over...........");
     }
 

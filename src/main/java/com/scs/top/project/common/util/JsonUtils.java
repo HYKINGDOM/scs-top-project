@@ -14,8 +14,8 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * @author MeasurePlatform
- * 对JSON操作类
+ * @author Administrator
+ * 对JSON操作类faster
  */
 public final class JsonUtils {
 
@@ -71,7 +71,7 @@ public final class JsonUtils {
     /**
      * 将 Java 对象转为 JSON 字符串
      */
-    public static <T> String toJSON(T obj) {
+    public static <T> String toJson(T obj) {
         if (objectMapper == null) {
             objectMapper = new ObjectMapper();
             //查询为null的字段也返回
@@ -81,7 +81,7 @@ public final class JsonUtils {
         try {
             jsonStr = objectMapper.writeValueAsString(obj);
         } catch (Exception e) {
-            logger.info("JsonUtils toJSON is Exception.");
+            logger.info("JsonUtils toJson is Exception.");
             throw new RuntimeException(e);
         }
         return jsonStr;
@@ -90,7 +90,7 @@ public final class JsonUtils {
     /**
      * 将 JSON 字符串转为 Java 对象
      */
-    public static <T> T fromJSON(String json, Class<T> type) {
+    public static <T> T fromJson(String json, Class<T> type) {
         if (objectMapper == null) {
             objectMapper = new ObjectMapper();
         }
@@ -98,7 +98,7 @@ public final class JsonUtils {
         try {
             obj = objectMapper.readValue(json, type);
         } catch (Exception e) {
-            logger.info("JsonUtils fromJSON is Exception.");
+            logger.info("JsonUtils fromJson is Exception.");
             throw new RuntimeException(e);
         }
         return obj;

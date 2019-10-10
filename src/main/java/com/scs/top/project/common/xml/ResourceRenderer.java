@@ -6,6 +6,9 @@ import org.springframework.core.io.ResourceLoader;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * @author Administrator
+ */
 public class ResourceRenderer {
     public static InputStream resourceLoader(String fileFullPath) throws IOException {
         ResourceLoader resourceLoader = new DefaultResourceLoader();

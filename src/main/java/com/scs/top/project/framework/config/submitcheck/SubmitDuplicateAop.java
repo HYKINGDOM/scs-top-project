@@ -32,7 +32,7 @@ public class SubmitDuplicateAop {
     @Resource
     private Cache<String, Integer> cache;
 
-    @Around("execution(* com.isoftstone.pmit.*.*.controller.*Controller.*(..)) && @annotation(nrs)")
+    @Around("execution(* com.scs.top.project.module.*.controller.*Controller.*(..)) && @annotation(nrs)")
     public Object around(ProceedingJoinPoint pjp, SubmitDuplicate nrs) {
         try {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

@@ -1,31 +1,21 @@
 package com.scs.top.project.common.util;
 
-import com.google.common.collect.Lists;
-import com.isoftstone.pmit.common.xml.ResourceRenderer;
-import com.isoftstone.pmit.system.user.entity.User;
-import com.isoftstone.pmit.system.user.entity.UserRoleDeptRegion;
-import org.apache.commons.io.IOUtils;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+import com.google.common.io.Resources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author MeasurePlatform
@@ -34,6 +24,74 @@ import java.util.stream.Collectors;
 public class Utils {
 
     public static final Logger logger = LoggerFactory.getLogger(Utils.class);
+
+    /**
+     * 生成指定长度的随机数
+     *
+     * @param strLength
+     * @return
+     */
+    public static Integer returnRadomInt(int strLength) {
+        Random rm = new Random();
+
+        // 获得随机数
+        int press = (int) ((1 + rm.nextDouble()) * Math.pow(10, strLength));
+
+        // 将获得的获得随机数转化为字符串
+        String fixLengthString = String.valueOf(press);
+
+        // 返回固定的长度的随机数
+        String substring = fixLengthString.substring(1, strLength + 1);
+
+        return Integer.valueOf(substring);
+    }
+
+
+    /**
+     * 返回随机一个请求头
+     *
+     * @return
+     */
+    public static String returnUrlRequestHeard() {
+        String requestUrlHeard = null;
+        try {
+            Random random = new Random();
+            URL url = Resources.getResource("userAgents");
+            File file = new File(url.getPath());
+            List<String> strings = Files.readLines(file, Charsets.UTF_8);
+            int size = strings.size();
+            int i = random.nextInt(size) % (size + 1);
+            requestUrlHeard = strings.get(i);
+        } catch (IOException e) {
+            e.getMessage();
+        }
+        return requestUrlHeard;
+    }
+
+
+    /**
+     * UTF8 转换成 GB2312 用于拼接查询
+     *
+     * @param name
+     * @return
+     */
+    public static String encodingSwitchToGbk(String name) {
+        String str = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            byte[] bytes = name.getBytes("GB2312");
+            for (byte b : bytes) {
+                String toHexString = Integer.toHexString(b);
+                str = toHexString.substring(6, 8);
+                stringBuilder.append("%").append(str.toUpperCase());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
+    }
+
+
     /**
      * 解析字符串公式
      *
@@ -61,9 +119,9 @@ public class Utils {
      */
     public static boolean isEmpty(Object... obj) {
         List<Boolean> result = new ArrayList<>();
-        for (Object o : obj) {
+        for (int i = 0; i < obj.length; i++) {
             boolean flag = false;
-            Object param = o;
+            Object param = obj[i];
             if (null == param) {
                 flag = true;
             } else if (param instanceof String) {
@@ -258,7 +316,7 @@ public class Utils {
             if (calendar.get(Calendar.DAY_OF_MONTH) != 6 && calendar.get(Calendar.DAY_OF_MONTH) != 0) {
                 result++;
             }
-            calendar.add(Calendar.DAY_OF_MONTH,1);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         // 此处 -1 不包含结束日期的那一天
         return result - 1;
@@ -267,10 +325,11 @@ public class Utils {
 
     /**
      * String字符串去重
+     *
      * @param splitStr
      * @return
      */
-    public static String stringBuliderAppend(String splitStr){
+    public static String stringBuliderAppend(String splitStr) {
         // 正则“,”切割字符串
         String[] splitArrays = splitStr.split(",");
 
@@ -290,140 +349,11 @@ public class Utils {
         //list 转 字符串
         StringBuilder sbBuilder = new StringBuilder();
         for (String string : resultList) {
-            sbBuilder.append(string).append(",");
+            sbBuilder.append(string + ",");
         }
         //去除字符串最后的一个 “，”
-        return sbBuilder.toString().substring(0, sbBuilder.length()-1);
-    }
-    /**
-     * 设置Excel导出的表头
-     * @param
-     * @return
-     */
-    public static int getFristHead(XSSFSheet sheet, XSSFCellStyle style, String[] headFirstPart,List<String> resultyw, XSSFRow row1, int fristHead, int headLength, int i ) {
-            if(i==resultyw.size()+headLength-1){
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, headLength, i));
-                XSSFCell yw = row1.createCell(headLength);
-                yw.setCellValue(headFirstPart[fristHead]);
-                yw.setCellStyle(style);
-                fristHead++;
-            }
-        return fristHead;
-    }
-    /**
-     * 设置抄送人
-     *
-     * */
-    public static List<String>  getccListByresultMap(Map<String,Object> resultMap){
-        String ccliststr = "";
-        List<String> ccList = new ArrayList<>();
-        if(null != resultMap.get("cclist")){
-            ccliststr = resultMap.get("cclist").toString();
-        }
-        if(!"".equals(ccliststr) && ccliststr.contains(",")){
-            String [] cclists = ccliststr.split(",");
-            if( cclists.length>0){
-                for (int i = 0; i <cclists.length ; i++) {
-                    ccList.add(cclists[i]+"@isoftstone.com");
-                }
-            }
-        }else if(!"".equals(ccliststr) && !ccliststr.contains(",")){
-            ccList.add(ccliststr +"@isoftstone.com");
-        }
-
-        return ccList;
+        String substring = sbBuilder.toString().substring(0, sbBuilder.length() - 1);
+        return substring;
     }
 
-    /**
-     * 下载resource下面的模板
-     * @param response 响应
-     * @param filename 下载后的文件名
-     * @param path 文件路径
-     */
-    public static void downLoadTemplate(HttpServletResponse response, String filename, String path) {
-        InputStream inputStream = null;
-        ServletOutputStream servletOutputStream = null;
-        try {
-            inputStream = ResourceRenderer.resourceLoader(path);
-            response.setContentType("application/vnd.ms-excel");
-            response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-            response.addHeader("charset", "utf-8");
-            response.addHeader("Pragma", "no-cache");
-            String encodeName = URLEncoder.encode(filename, StandardCharsets.UTF_8.toString());
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + encodeName + "\"; filename*=utf-8''" + encodeName);
-
-            servletOutputStream = response.getOutputStream();
-            IOUtils.copy(inputStream, servletOutputStream);
-            response.flushBuffer();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.info("==========downLoadSowTemp error===========" + e.getMessage());
-        } finally {
-            try {
-                if (servletOutputStream != null) {
-                    servletOutputStream.close();
-                }
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                // 召唤jvm的垃圾回收器
-                System.gc();
-            } catch (Exception e) {
-                e.printStackTrace();
-                logger.info("==========downLoadSowTemp error===========" + e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * 转换数据格式,将List<Map>,转换成Map<String,List<Map>>
-     * @param mapList
-     * @param keyMap
-     * @return
-     */
-    public static Map<Object,List<Map<String,Object>>> listSwitchMapData(List<Map<String, Object>> mapList,String keyMap){
-        Map<Object, List<Map<String, Object>>> mapWall = mapList.stream().collect(Collectors.toMap(key -> key.get(keyMap),
-                Lists::newArrayList,
-                (List<Map<String, Object>> newValueList, List<Map<String, Object>> oldValueList) -> {
-                    oldValueList.addAll(newValueList);
-                    return oldValueList;
-                }));
-        return mapWall;
-    }
-
-    /**
-     * 处理数据成树状结构
-     * @param list
-     * @param pid
-     * @return
-     */
-    public static List<Map<String,Object>> pushManyGroup(List<Map<String,Object>> list,String pid){
-        List<Map<String,Object>> arr = new ArrayList<Map<String,Object>>();
-        for (Map<String,Object> map : list) {
-            if(pid.equals(map.get("parentId") + "")){
-                map.put("children",(pushManyGroup(list, (String)map.get("deptNum"))));
-                arr.add(map);
-            }
-        }
-        return arr;
-    }
-
-    /**
-     * 获取当前登录人员的地域信息
-     * @param user 当前user
-     * @param roleId 当前角色ID
-     * @return 逗号隔开的地域ID
-     */
-    public static String getCurrentRegions(User user, Integer roleId) {
-        String regions = "";
-        List<UserRoleDeptRegion> userRoleDeptRegionList = user
-                .getUserRoleDeptRegionList();
-        for (UserRoleDeptRegion  urdr: userRoleDeptRegionList) {
-            if(roleId.equals(urdr.getRoleId())){
-                regions = urdr.getRegionId();
-                break;
-            }
-        }
-        return regions;
-    }
 }

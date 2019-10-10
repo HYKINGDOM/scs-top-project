@@ -9,6 +9,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 
 /**
@@ -120,11 +121,11 @@ public class HttpUtils {
         return result.toString();
     }
 
-    public static String sendSSLPost(String url, String param) {
+    public static String sendsslpost(String url, String param) {
         StringBuilder result = new StringBuilder();
         String urlNameString = url + "?" + param;
         try {
-            log.info("sendSSLPost - {}", urlNameString);
+            log.info("sendsslpost - {}", urlNameString);
             SSLContext sc = SSLContext.getInstance("SSL");
             sc.init(null, new TrustManager[]{new TrustAnyTrustManager()}, new java.security.SecureRandom());
             URL console = new URL(urlNameString);
@@ -144,21 +145,21 @@ public class HttpUtils {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String ret = "";
             while ((ret = br.readLine()) != null) {
-                if (ret != null && !("").equals(ret.trim())) {
-                    result.append(new String(ret.getBytes("ISO-8859-1"), "utf-8"));
+                if (!"".equals(ret.trim())) {
+                    result.append(new String(ret.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                 }
             }
             log.info("recv - {}", result);
             conn.disconnect();
             br.close();
         } catch (ConnectException e) {
-            log.error("调用HttpUtils.sendSSLPost ConnectException, url=" + url + ",param=" + param, e);
+            log.error("调用HttpUtils.sendsslpost ConnectException, url=" + url + ",param=" + param, e);
         } catch (SocketTimeoutException e) {
-            log.error("调用HttpUtils.sendSSLPost SocketTimeoutException, url=" + url + ",param=" + param, e);
+            log.error("调用HttpUtils.sendsslpost SocketTimeoutException, url=" + url + ",param=" + param, e);
         } catch (IOException e) {
-            log.error("调用HttpUtils.sendSSLPost IOException, url=" + url + ",param=" + param, e);
+            log.error("调用HttpUtils.sendsslpost IOException, url=" + url + ",param=" + param, e);
         } catch (Exception e) {
-            log.error("调用HttpsUtil.sendSSLPost Exception, url=" + url + ",param=" + param, e);
+            log.error("调用HttpsUtil.sendsslpost Exception, url=" + url + ",param=" + param, e);
         }
         return result.toString();
     }

@@ -22,7 +22,7 @@ public class AjaxResult extends HashMap<String, Object> {
         Map<String, Object> resultMap = new HashMap<>(2);
         resultMap.put("success", result);
         resultMap.put("message", message);
-        return JsonUtils.toJSON(resultMap);
+        return JsonUtils.toJson(resultMap);
     }
 
 
@@ -36,7 +36,7 @@ public class AjaxResult extends HashMap<String, Object> {
         Map<String, Object> resultMap = new HashMap<>(2);
         resultMap.put("success", result);
         resultMap.put("data", obj);
-        return JsonUtils.toJSON(resultMap);
+        return JsonUtils.toJson(resultMap);
     }
 
 

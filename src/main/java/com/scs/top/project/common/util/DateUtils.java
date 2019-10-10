@@ -1,21 +1,24 @@
 package com.scs.top.project.common.util;
 
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 /**
  * 时间处理工具类
- * 1,不建议使用SimpleDateFormat方法来格式化时间,因为在高并发的情况下会出现时间错乱的问题
- * 建议获取时间或者转换时间使用java.time.format.DateTimeFormatter方法
- * 2,新建在该类中的方法,尽量设置为,需要的时间格式传入参数形式
+ * @author Administrator
  */
 public class DateUtils {
 
@@ -23,15 +26,30 @@ public class DateUtils {
 
     public static String YYYY_MM = "yyyy-MM";
 
-    public static String MM_DD = "MM-dd";
-
     public static String YYYY_MM_DD = "yyyy-MM-dd";
-
-    public static String YYYYMMDD = "yyyyMMdd";
 
     public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
+    public static String YYYYMMDD = "yyyyMMdd";
+
     public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+
+    private static SimpleDateFormat retrunStringByDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+    /**
+     *
+     * @return
+     */
+    public static String returnYearMonthDayDateTime(){
+        return format(getNowDate(), YYYYMMDD);
+    }
+
+
+
+    public static String parseDateToStr(final String format, final Date date) {
+        return new SimpleDateFormat(format).format(date);
+    }
 
 
     /**
@@ -54,58 +72,19 @@ public class DateUtils {
     }
 
     /**
-     * 按照传入的日期格式进行日期格式化
+     * 日期格式化 日期格式为：yyyy-MM-dd
      *
      * @param date    日期
-     * @param pattern 格式，如： YYYY_MM_DD_HH_MM_SS
-     * @return 返回格式日期
+     * @param pattern 格式，如：DateUtils.DATE_TIME_PATTERN
+     * @return 返回yyyy-MM-dd格式日期
      */
     public static String format(Date date, String pattern) {
         if (date != null) {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-            Instant instant = date.toInstant();
-            ZoneId zone = ZoneId.systemDefault();
-            LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, zone);
-            return localDateTime.format(dateTimeFormatter);
+            SimpleDateFormat df = new SimpleDateFormat(pattern);
+            return df.format(date);
         }
         return null;
     }
-
-    /**
-     * 当前时间转换成String格式
-     *
-     * @param pattern 传入需要转换的时间格式
-     * @return
-     */
-    public static String currentDateToString(String pattern) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-        return localDateTime.format(dateTimeFormatter);
-    }
-
-    /**
-     * 当前时间转换成String格式
-     *
-     * @param pattern 传入需要转换的时间格式
-     * @return
-     */
-    public static String currentDateToDate(String pattern) {
-        org.joda.time.format.DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
-        return dateTimeFormatter.print(System.currentTimeMillis());
-    }
-
-    /**
-     * 将字符串时间格式转换为自定义时间格式
-     * @param dateTimeStr
-     * @param dateFormate
-     * @return
-     */
-    public static Date toFormatDate(String dateTimeStr,String dateFormate) {
-        org.joda.time.format.DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(dateFormate);
-        DateTime dateTime = dateTimeFormatter.parseDateTime(dateTimeStr);
-        return dateTime.toDate();
-    }
-
 
     /**
      * 字符串转换成日期
@@ -117,8 +96,8 @@ public class DateUtils {
         if (StringUtils.isBlank(strDate)) {
             return null;
         }
-        org.joda.time.format.DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
-        return dateTimeFormatter.parseLocalDateTime(strDate).toDate();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
+        return fmt.parseLocalDateTime(strDate).toDate();
     }
 
     /**
@@ -223,28 +202,115 @@ public class DateUtils {
 
 
     /**
-     * 传入（字符串）起止时间得到中间的所有月份（包括起止时间）
+     * 日期路径 即年/月/日 如2018/08/08
+     */
+    public static final String datePath() {
+        Date now = new Date();
+        return DateFormatUtils.format(now, "yyyy/MM/dd");
+    }
+
+    /**
+     * 日期路径 即年/月/日 如20180808
+     */
+    public static final String dateTime() {
+        Date now = new Date();
+        return DateFormatUtils.format(now, "yyyyMMdd");
+    }
+
+
+    /**
+     * 获取当前月的前一个月
+     *
+     * @return
+     */
+    public static String getBeforeMonthDate() {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, -1);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        return format.format(calendar.getTime());
+    }
+
+    /**
+     * 获取当前月
+     *
+     * @return
+     */
+    public static String getCurrentMonthDate() {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 0);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        return format.format(calendar.getTime());
+    }
+
+
+    /**
+     * 返回系统当前时间
+     *
+     * @return
+     */
+    public static String getSystemDate() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(new Date());
+    }
+
+    /**
+     * 字符串转换成日期
+     *
+     * @param str
+     * @return date
+     */
+    public static Date strToDate(String str) {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = format.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    /**
+     * 获取String格式当前时间
+     *
+     * @return date
+     */
+    public static String nowDateToDate(){
+        return retrunStringByDateFormat.format(new Date());
+    }
+
+    /**
+     * 传入（字符串）起止时间得到中间的所有月份（包括起止时间）8.10
      *
      * @param minDate 字符串类型开始时间
      * @param maxDate 字符串类型结束时间
-     * @return 返回时间是结束时间的上一个月时间
+     * @return
+     * @throws ParseException
      */
-    public static List<String> getMonthBetween(String minDate, String maxDate ,String dateFormate){
-        List<String> result = new ArrayList<>();
+    public static List<String> getMonthBetween(String minDate, String maxDate) throws ParseException {
+        List<String> result = new ArrayList<String>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 
         Calendar min = Calendar.getInstance();
         Calendar max = Calendar.getInstance();
-        min.setTime(Objects.requireNonNull(stringToDate(minDate, dateFormate)));
-        max.setTime(Objects.requireNonNull(stringToDate(maxDate, dateFormate)));
-        min.set(min.get(Calendar.YEAR), min.get(Calendar.MONTH), 1);
-        max.set(max.get(Calendar.YEAR), max.get(Calendar.MONTH), 1);
 
-        while (min.before(max)) {
-            result.add(format(min.getTime(),dateFormate));
-            min.add(Calendar.MONTH, 1);
+        min.setTime(sdf.parse(minDate));
+        min.set(min.get(Calendar.YEAR), min.get(Calendar.MONTH), 1);
+
+        max.setTime(sdf.parse(maxDate));
+        // 这样设置可以获取结束时间本身
+        max.set(max.get(Calendar.YEAR), max.get(Calendar.MONTH), 2);
+        Calendar curr = min;
+        while (curr.before(max)) {
+            result.add(sdf.format(curr.getTime()));
+            curr.add(Calendar.MONTH, 1);
         }
-        result.add(maxDate);
+
         return result;
     }
-    
 }
