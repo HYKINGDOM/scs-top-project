@@ -1,12 +1,12 @@
 package com.scs.top.project.module.spider.controller;
 
 
-import com.wormreading.pmit.project.search.common.util.AjaxResult;
-import com.wormreading.pmit.project.search.common.util.JsonUtils;
-import com.wormreading.pmit.project.search.common.web.controller.AbstractController;
-import com.wormreading.pmit.project.search.item.spider.pojo.BookChapter ;
-import com.wormreading.pmit.project.search.item.spider.pojo.BookInfo ;
-import com.wormreading.pmit.project.search.item.spider.service.SpiderSearchService;
+import com.scs.top.project.common.util.AjaxResult;
+import com.scs.top.project.common.util.JsonUtils;
+import com.scs.top.project.common.web.controller.AbstractController;
+import com.scs.top.project.module.spider.pojo.BookChapter;
+import com.scs.top.project.module.spider.pojo.BookInfo;
+import com.scs.top.project.module.spider.service.SpiderSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +37,6 @@ public class SpiderSearchController extends AbstractController {
             if (map == null) {
                 return AjaxResult.returnToMessage(false, "请出输入查询的书籍名");
             }
-
             bookChaptersList = spiderService.getBookContentInfoByBookIdAndChapter(map.get("bookName"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,9 +50,7 @@ public class SpiderSearchController extends AbstractController {
     @PostMapping(value = "/testbookinfo")
     public Callable<List<BookInfo>> testBookInfo(@RequestBody String bookName) {
         Map<String, String> map = JsonUtils.readValue(bookName, Map.class);
-
         Callable<List<BookInfo>> bookInfoCallable = () -> spiderService.getBookContentInfoByBookIdAndChapter(map.get("bookName"));
-
         return bookInfoCallable;
     }
 
@@ -94,8 +91,8 @@ public class SpiderSearchController extends AbstractController {
         if (param == null) {
             return null;
         }
-        BookInfo bookInfo = JsonUtils.readValue(JsonUtils.toJSON(prams.get("data")), BookInfo.class);
-        String chapterIndex = JsonUtils.readValue(JsonUtils.toJSON(prams.get("indexUrl")), String.class);
+        BookInfo bookInfo = JsonUtils.readValue(JsonUtils.toJson(prams.get("data")), BookInfo.class);
+        String chapterIndex = JsonUtils.readValue(JsonUtils.toJson(prams.get("indexUrl")), String.class);
         return () -> spiderService.searchBookInfoReturnAnyChapterInfo(bookInfo, chapterIndex);
     }
 

@@ -36,21 +36,21 @@ public class SpiderController extends AbstractCustomResult {
 
     /**
      * 获取首页推荐书籍--数据会缓存到redis
+     *
      * @param parameter
      * @return
      */
     @PostMapping(value = "/getBookInfoHomePage")
-    public Callable<PageInfo<BookInfo>> getBogetBookInfoHomePageokInfoHomePage(@RequestBody String parameter) {
-        Map<String,String> paramMap = JsonUtils.readValue(parameter, Map.class);
+    public Callable<PageInfo<BookInfo>> getBogetBookInfoHomePageOkInfoHomePage(@RequestBody String parameter) {
+        Map<String, String> paramMap = JsonUtils.readValue(parameter, Map.class);
         if (paramMap == null) {
             return null;
         }
-        int pageNum= Integer.parseInt(String.valueOf(paramMap.get("pageNum")));
-        int pageSize= Integer.parseInt(String.valueOf(paramMap.get("pageSize")));
+        int pageNum = Integer.parseInt(String.valueOf(paramMap.get("pageNum")));
+        int pageSize = Integer.parseInt(String.valueOf(paramMap.get("pageSize")));
         BookInfo bookInfo = new BookInfo();
-        return () -> spiderService.getBookInfoHomePage(pageNum,pageSize,bookInfo);
+        return () -> spiderService.getBookInfoHomePage(pageNum, pageSize, bookInfo);
     }
-
 
 
     @PostMapping(value = "/getTestCrawlBookChapter")
@@ -67,7 +67,7 @@ public class SpiderController extends AbstractCustomResult {
 
 
     @GetMapping(value = "/getBookInfoUrl")
-    public String getBookInfoUrl(){
+    public String getBookInfoUrl() {
         spiderService.getBookInfoUrl();
         return "查询成功";
     }

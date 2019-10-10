@@ -1,7 +1,7 @@
 package com.scs.top.project.common.exception;
 
 
-import com.isoftstone.pmit.common.util.AjaxResult;
+import com.scs.top.project.common.util.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
@@ -68,9 +68,14 @@ public class GlobalErrorController extends AbstractErrorController {
         return mv;
     }
 
+    /**
+     * 设置响应状态码为：200，结合前端约定的规范处理。也可不设置状态码，前端ajax调用使用error函数进行控制处理
+     * @param request
+     * @param e
+     * @return
+     */
     @RequestMapping
     @ResponseBody
-    //设置响应状态码为：200，结合前端约定的规范处理。也可不设置状态码，前端ajax调用使用error函数进行控制处理
     @ResponseStatus(value = HttpStatus.OK)
     public String error(HttpServletRequest request, Exception e) {
         logger.info("统一异常处理【" + getClass().getName() + ".error】text/html=普通请求：request=" + request);

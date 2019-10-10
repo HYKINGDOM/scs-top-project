@@ -33,16 +33,12 @@ public class Utils {
      */
     public static Integer returnRadomInt(int strLength) {
         Random rm = new Random();
-
         // 获得随机数
         int press = (int) ((1 + rm.nextDouble()) * Math.pow(10, strLength));
-
         // 将获得的获得随机数转化为字符串
         String fixLengthString = String.valueOf(press);
-
         // 返回固定的长度的随机数
         String substring = fixLengthString.substring(1, strLength + 1);
-
         return Integer.valueOf(substring);
     }
 
