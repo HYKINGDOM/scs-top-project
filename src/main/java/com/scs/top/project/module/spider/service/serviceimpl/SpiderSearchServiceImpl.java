@@ -46,7 +46,6 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
 
     @Override
     @DataSourceTransaction(name="second")
-    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     public void testBookInfo() {
 
         BookInfo bookInfo = new BookInfo();
@@ -135,7 +134,6 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
 
 
     @Override
-    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     @DataSourceTransaction(name="second")
     public List<BookInfo> getBookContentInfoByBookIdAndChapter(String bookName) {
 
@@ -194,7 +192,6 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
 
 
     @Override
-    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     @DataSourceTransaction(name="second")
     public BookChapter searchBookInfoReturnFirstChapterInfo(BookInfo bookInfo) {
         Long bookId = bookInfo.getBookId();
@@ -246,7 +243,6 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
 
 
     @Override
-    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     @DataSourceTransaction(name="second")
     public List<Map<String, Object>> searchBookInfoReturnChapterIndex(BookInfo bookInfo) {
         String bookInfoIndex = bookInfo.getBookId().toString() + "-index";
@@ -263,7 +259,6 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
     }
 
     @Override
-    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     @DataSourceTransaction(name="second")
     public BookChapter searchBookInfoReturnAnyChapterInfo(BookInfo bookInfo, String chapterIndex) {
         long bookId = bookInfo.getBookId();

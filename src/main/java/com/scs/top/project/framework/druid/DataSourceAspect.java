@@ -9,6 +9,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,7 +18,8 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class DataSourceAspect implements Ordered {
+@Order(0)
+public class DataSourceAspect{
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -44,11 +46,5 @@ public class DataSourceAspect implements Ordered {
             DynamicDataSource.clearDataSource();
             logger.info("clean datasource");
         }
-    }
-
-
-    @Override
-    public int getOrder() {
-        return 1;
     }
 }
