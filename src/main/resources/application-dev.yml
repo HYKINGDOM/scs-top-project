@@ -1,20 +1,22 @@
-
 # 数据源配置
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     druid:
+      stat-view-servlet:
+        login-username: scs
+        login-password: scs
       # 主库数据源
       master:
-        url: jdbc:mysql://localhost:3366/scs_top?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true
+        url: jdbc:mysql://localhost:3306/scs_top?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true
         username: root
         password: root
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
         #  enabled: false
-        url: jdbc:mysql://localhost:3366/worm-reading?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true
+        url: jdbc:mysql://localhost:3306/worm_reading?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true
         username: root
         password: root
       # 初始连接数

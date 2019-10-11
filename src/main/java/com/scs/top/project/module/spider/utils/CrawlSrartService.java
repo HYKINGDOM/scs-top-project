@@ -2,22 +2,18 @@ package com.scs.top.project.module.spider.utils;
 
 import com.scs.top.project.module.spider.mapper.SpiderMapper;
 import com.scs.top.project.module.spider.pojo.BookChapter;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
 
 import static com.scs.top.project.common.util.JsoupUtils.getHtmlDocumentPost;
-import static com.scs.top.project.common.util.JsoupUtils.trustEveryone;
-import static com.scs.top.project.common.util.Utils.returnUrlRequestHeard;
-
 
 /**
  * @author Administrator
  */
+@Slf4j
 public class CrawlSrartService implements Runnable {
 
 
@@ -32,7 +28,6 @@ public class CrawlSrartService implements Runnable {
 
 
     public CrawlSrartService(String bookAddressUrl, String bookChapterAddress,int index) {
-
         this.bookAddressUrl = bookAddressUrl;
         this.bookChapterAddress = bookChapterAddress;
         this.index = index;
@@ -43,7 +38,6 @@ public class CrawlSrartService implements Runnable {
     public void run() {
         StringBuilder stringBuilder = new StringBuilder();
         BookChapter bookChapter = new BookChapter();
-
         stringBuilder.append(bookAddressUrl);
         bookChapter.setChapterNameNum(index);
         Document document = getHtmlDocumentPost(stringBuilder.append(bookChapterAddress).toString());
@@ -51,7 +45,7 @@ public class CrawlSrartService implements Runnable {
         String textContext = elementById.text();
         bookChapter.setChapterContentNum(textContext.length());
         bookChapter.setChapterContent(textContext);
-        System.out.println("第" + index + "章");
+        log.info("读取存入第{}章",index);
         spiderMapper.saveBookChapterOne(bookChapter);
     }
 }

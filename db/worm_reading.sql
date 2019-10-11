@@ -46,17 +46,24 @@ create table book_chapter (
 -- ----------------------------
 -- 3、定时任务执行时间表
 -- ----------------------------
-drop table if exists schedule_task_job;
-create table schedule_task_job (
-  id 	 		    	integer(20) 	not null auto_increment		comment '定时任务主键ID',
-  scheduleTaskName 	 	varchar(30) 	default null 			    comment '定时任务名',
-  scheduleTaskNum	 	integer(100)    default null 				comment '定时任务编号',
-  scheduleTaskCorn  	varchar(20) 	default null 				comment '定时任务时间解析',
-  createby   			varchar(30) 	default null   				comment '创建人',
-  createTime        	datetime        default null            	comment '创建时间',
-  updateTime         	datetime     	default null            	comment '更新时间',
-  primary key (id)
-) engine=innodb auto_increment=100 default charset=utf8 comment = '定时任务执行时间表';
+DROP TABLE IF EXISTS `schedule_task_job`;
+CREATE TABLE `schedule_task_job` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '定时任务主键ID',
+  `scheduleTaskName` varchar(30) DEFAULT NULL COMMENT '定时任务名',
+  `scheduleTaskNum` int(100) DEFAULT NULL COMMENT '定时任务编号',
+  `scheduleTaskCorn` varchar(20) DEFAULT NULL COMMENT '定时任务时间解析',
+  `createby` varchar(30) DEFAULT NULL COMMENT '创建人',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='定时任务执行时间表';
+
+
+LOCK TABLES `schedule_task_job` WRITE;
+/*!40000 ALTER TABLE `schedule_task_job` DISABLE KEYS */;
+INSERT INTO `schedule_task_job` VALUES (1,'定时爬取小说首页任务',101,'0 0 0 1/1 * ? ','yihur','2019-06-15 11:05:26','2019-08-05 11:02:53');
+/*!40000 ALTER TABLE `schedule_task_job` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
@@ -119,5 +126,3 @@ create table scs_user_info (
   updateTime           datetime     	default null            	comment '更新时间',
   primary key (id)
 ) engine=innodb auto_increment=100 default charset=utf8 comment = '评审代码内容表';
-
-​

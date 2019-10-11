@@ -14,7 +14,9 @@ spring:
 
 mybatis:
   # 对应的实体类的包路径
-  type-aliases-package: com.scs.top.project
+  type-aliases-package: com.scs.top.project.module.*.pojo
+  #配置mapper.xml路径
+  mapper-locations: classpath:mapper/**/*Mapper.xml
   configuration:
     # 映射驼峰大小写
     map-underscore-to-camel-case: true
@@ -32,8 +34,7 @@ mybatis:
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
     # 如果查询为null,字段依然显示
     call-setters-on-nulls: true
-  #配置mapper.xml路径
-  mapper-locations: classpath:mapper/*Mapper.xml
+
 
 # 分页配置
 pagehelper:

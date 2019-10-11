@@ -3,6 +3,7 @@ package com.scs.top.project.module.spider.utils;
 
 import com.scs.top.project.common.util.StringUtils;
 import com.scs.top.project.module.spider.service.SpiderService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,15 @@ import java.util.Map;
 
 
 /**
- * 定时任务方法
+ * 定时任务---用于每天从网站获取数据刷新数据库
+ *
  * @author yihur
  */
+@Slf4j
 @Component
 @Configuration
 @EnableScheduling
 public class DynamicScheduleTask implements SchedulingConfigurer {
-
-    private final Logger logger = LoggerFactory.getLogger(DynamicScheduleTask.class);
 
     @Autowired
     private SpiderService spiderService;
@@ -43,7 +44,7 @@ public class DynamicScheduleTask implements SchedulingConfigurer {
                     String scheduleTaskCorn = cronMapLists.get("scheduleTaskCorn").toString();
                     //2.2 合法性校验.
                     if (StringUtils.isEmpty(scheduleTaskCorn)) {
-                        logger.error("时间解析出错");
+                        log.error("时间解析出错");
                     }
                     spiderService.updateScheduledTime(cronMapLists);
                     //2.3 返回执行周期(Date)

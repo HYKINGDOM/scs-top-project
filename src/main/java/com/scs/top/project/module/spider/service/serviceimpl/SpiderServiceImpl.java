@@ -6,6 +6,8 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.scs.top.project.common.constant.RedisConstans;
 import com.scs.top.project.common.util.StringUtils;
+import com.scs.top.project.framework.druid.DataSourceTransaction;
+import com.scs.top.project.framework.druid.TransactionConfig;
 import com.scs.top.project.framework.redis.RedisUtil;
 import com.scs.top.project.module.spider.mapper.SpiderMapper;
 import com.scs.top.project.module.spider.pojo.BookChapter;
@@ -25,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -77,6 +80,8 @@ public class SpiderServiceImpl implements SpiderService {
 
 
     @Override
+    @DataSourceTransaction(name="second")
+    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     public List<BookChapter> getBookContentInfoByBookIdAndChapter(BookInfo bookInfo) {
         long bookId = createBookId();
         bookInfo.setBookId(bookId);
@@ -98,6 +103,8 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
+    @DataSourceTransaction(name="second")
+    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     public List<BookChapter> getTestBookContentInfoByBookIdAndChapter(BookInfo bookInfo) {
         String bookAddressUrl = bookInfo.getBookIndexUrl();
 
@@ -129,6 +136,8 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
+    @DataSourceTransaction(name="second")
+    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     public PageInfo<BookInfo> getBookInfoHomePage(int pageNum, int pageSize, BookInfo bookInfo) {
         PageHelper.startPage(pageNum, pageSize);
         List<BookInfo> bookInfos = null;
@@ -150,6 +159,8 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
+    @DataSourceTransaction(name="second")
+    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     public Map<String, Object> getCronMapLists() {
         Map<String, Object> param = Maps.newHashMapWithExpectedSize(2);
         param.put("scheduleTaskNum", 101);
@@ -160,6 +171,8 @@ public class SpiderServiceImpl implements SpiderService {
      * 获取首页推荐书籍信息，并存入数据库
      */
     @Override
+    @DataSourceTransaction(name="second")
+    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     public void getBookInfoUrl() {
         String bookWebSiteUrl = "https://www.x23us.com/";
         Document htmlDocument = getHtmlDocumentPost(bookWebSiteUrl);
@@ -187,6 +200,8 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
+    @DataSourceTransaction(name="second")
+    @Transactional(value = TransactionConfig.SECOND_TX, rollbackFor = Exception.class)
     public void updateScheduledTime(Map<String, Object> param) {
         spiderMapper.updateScheduledTime(param);
     }

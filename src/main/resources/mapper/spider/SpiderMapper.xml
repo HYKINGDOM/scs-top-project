@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scs.top.project.module.spider.mapper.SpiderMapper">
+
+
+    <resultMap type="com.scs.top.project.module.spider.pojo.BookInfo" id="bookInfoMap">
+        <id property="bookId" column="bookId"/>
+        <result property="bookName" column="bookName"/>
+        <result property="bookType" column="bookType"/>
+        <result property="latestChapters" column="latestChapters"/>
+        <result property="author" column="author"/>
+        <result property="articleLength" column="articleLength"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="currentState" column="currentState"/>
+        <result property="collectionNum" column="collectionNum"/>
+        <result property="totalClick" column="totalClick"/>
+        <result property="totalRecommendedNum" column="totalRecommendedNum"/>
+        <result property="content" column="content"/>
+        <result property="bookAddressUrl" column="bookAddressUrl"/>
+        <result property="bookIndexUrl" column="bookIndexUrl"/>
+        <result property="bookImageUrl" column="bookImageUrl"/>
+        <result property="bookSource" column="bookSource"/>
+        <result property="crawlingTime" column="crawlingTime"/>
+    </resultMap>
+
+
+    <insert id="saveBookInfoData" parameterType="com.scs.top.project.module.spider.pojo.BookInfo">
+        replace into book_info(
+        bookId,
+        bookName,
+        <if test="bookType != null and bookType != ''">
+            bookType,
+        </if>
+        <if test="latestChapters != null and latestChapters != ''">
+            latestChapters,
+        </if>
+        <if test="author != null and author != ''">
+            author,
+        </if>
+        <if test="articleLength != null and articleLength != ''">
+            articleLength,
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            updateTime,
+        </if>
+        <if test="currentState != null and currentState != ''">
+            currentState,
+        </if>
+        <if test="collectionNum != null and collectionNum != ''">
+            collectionNum,
+        </if>
+        <if test="totalClick != null and totalClick != ''">
+            totalClick,
+        </if>
+        <if test="totalRecommendedNum != null and totalRecommendedNum != ''">
+            totalRecommendedNum,
+        </if>
+        <if test="content != null and content != ''">
+            content,
+        </if>
+        <if test="bookAddressUrl != null and bookAddressUrl != ''">
+            bookAddressUrl,
+        </if>
+        <if test="bookIndexUrl != null and bookIndexUrl != ''">
+            bookIndexUrl,
+        </if>
+        <if test="bookImageUrl != null and bookImageUrl != ''">
+            bookImageUrl,
+        </if>
+        <if test="bookSource != null and bookSource != ''">
+            bookSource,
+        </if>
+        crawlingTime
+        )values(
+        #{bookId},
+        #{bookName},
+        <if test="bookType != null and bookType != ''">
+            #{bookType},
+        </if>
+        <if test="latestChapters != null and latestChapters != ''">
+            #{latestChapters},
+        </if>
+        <if test="author != null and author != ''">
+            #{author},
+        </if>
+        <if test="articleLength != null and articleLength != ''">
+            #{articleLength},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            #{updateTime},
+        </if>
+        <if test="currentState != null and currentState != ''">
+            #{currentState},
+        </if>
+        <if test="collectionNum != null and collectionNum != ''">
+            #{collectionNum},
+        </if>
+        <if test="totalClick != null and totalClick != ''">
+            #{totalClick},
+        </if>
+        <if test="totalRecommendedNum != null and totalRecommendedNum != ''">
+            #{totalRecommendedNum},
+        </if>
+        <if test="content != null and content != ''">
+            #{content},
+        </if>
+        <if test="bookAddressUrl != null and bookAddressUrl != ''">
+            #{bookAddressUrl},
+        </if>
+        <if test="bookIndexUrl != null and bookIndexUrl != ''">
+            #{bookIndexUrl},
+        </if>
+        <if test="bookImageUrl != null and bookImageUrl != ''">
+            #{bookImageUrl},
+        </if>
+        <if test="bookSource != null and bookSource != ''">
+            #{bookSource},
+        </if>
+        now()
+        )
+    </insert>
+
+
+    <insert id="saveBookInfoDataLists" parameterType="com.scs.top.project.module.spider.pojo.BookInfo">
+        replace into book_info(
+        bookId,
+        bookName,
+        <if test="bookType != null and bookType != ''">
+            bookType,
+        </if>
+        <if test="latestChapters != null and latestChapters != ''">
+            latestChapters,
+        </if>
+        <if test="author != null and author != ''">
+            author,
+        </if>
+        <if test="articleLength != null and articleLength != ''">
+            articleLength,
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            updateTime,
+        </if>
+        <if test="currentState != null and currentState != ''">
+            currentState,
+        </if>
+        <if test="collectionNum != null and collectionNum != ''">
+            collectionNum,
+        </if>
+        <if test="totalClick != null and totalClick != ''">
+            totalClick,
+        </if>
+        <if test="totalRecommendedNum != null and totalRecommendedNum != ''">
+            totalRecommendedNum,
+        </if>
+        <if test="content != null and content != ''">
+            content,
+        </if>
+        <if test="bookAddressUrl != null and bookAddressUrl != ''">
+            bookAddressUrl,
+        </if>
+        <if test="bookIndexUrl != null and bookIndexUrl != ''">
+            bookIndexUrl,
+        </if>
+        <if test="bookImageUrl != null and bookImageUrl != ''">
+            bookImageUrl,
+        </if>
+        <if test="bookSource != null and bookSource != ''">
+            bookSource,
+        </if>
+        crawlingTime
+        )values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.bookId},
+            <if test="null != item.bookName and '' != item.bookName">
+                #{item.bookName},
+            </if>
+            <if test="item.bookType != null and item.bookType != ''">
+                #{item.bookType},
+            </if>
+            <if test="item.latestChapters != null and item.latestChapters != ''">
+                #{item.latestChapters},
+            </if>
+            <if test="item.author != null and item.author != ''">
+                #{item.author},
+            </if>
+            <if test="item.articleLength != null and item.articleLength != ''">
+                #{item.articleLength},
+            </if>
+            <if test="item.updateTime != null and item.updateTime != ''">
+                #{item.updateTime},
+            </if>
+            <if test="item.currentState != null and item.currentState != ''">
+                #{item.currentState},
+            </if>
+            <if test="item.collectionNum != null and item.collectionNum != ''">
+                #{item.collectionNum},
+            </if>
+            <if test="item.totalClick != null and item.totalClick != ''">
+                #{item.totalClick},
+            </if>
+            <if test="item.totalRecommendedNum != null and item.totalRecommendedNum != ''">
+                #{item.totalRecommendedNum},
+            </if>
+            <if test="item.content != null and item.content != ''">
+                #{item.content},
+            </if>
+            <if test="item.bookAddressUrl != null and item.bookAddressUrl != ''">
+                #{item.bookAddressUrl},
+            </if>
+            <if test="item.bookIndexUrl != null and item.bookIndexUrl != ''">
+                #{item.bookIndexUrl},
+            </if>
+            <if test="item.bookImageUrl != null and item.bookImageUrl != ''">
+                #{item.bookImageUrl},
+            </if>
+            <if test="item.bookSource != null and item.bookSource != ''">
+                #{item.bookSource},
+            </if>
+            now()
+            )
+        </foreach>
+    </insert>
+
+
+    <insert id="saveBookChapter" parameterType="list" keyProperty="id" useGeneratedKeys="true">
+        insert into book_chapter(
+        bookId,
+        chapterNameNum,
+        chapterName,
+        chapterContentNum,
+        chapterContent,
+        updateTime
+        )values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{item.bookId} ,
+            #{item.chapterNameNum} ,
+            #{item.chapterName} ,
+            #{item.chapterContentNum} ,
+            #{item.chapterContent} ,
+            now()
+            )
+        </foreach>
+
+    </insert>
+
+
+    <insert id="saveBookChapterOne" parameterType="com.scs.top.project.module.spider.pojo.BookChapter"
+            keyProperty="id" useGeneratedKeys="true">
+        insert into book_chapter(
+        bookId,
+        chapterNameNum,
+        chapterName,
+        chapterContentNum,
+        chapterContent,
+        updateTime
+        )values(
+            #{bookId} ,
+            #{chapterNameNum} ,
+            #{chapterName} ,
+            #{chapterContentNum} ,
+            #{chapterContent} ,
+            now()
+            )
+    </insert>
+
+
+    <select id="getBookContentInfoByBookIdAndChapter"
+            parameterType="com.scs.top.project.module.spider.pojo.BookChapter"
+            resultType="com.scs.top.project.module.spider.pojo.BookChapter">
+        SELECT
+        id,
+        bookid,
+        chapterNameNum,
+        chapterName,
+        chapterContentNum,
+        chapterContent,
+        DATE_FORMAT(updateTime,'%Y-%m-%d %H:%i:%S') as preservetime
+        FROM book_chapter
+
+        where 1=1
+        <if test="bookId != null and bookId != 0">
+            and bookId = #{bookId}
+        </if>
+        order by chapterNameNum desc top 10
+    </select>
+
+    <select id="selectBookInfoData" parameterType="com.scs.top.project.module.spider.pojo.BookChapter" resultType="com.scs.top.project.module.spider.pojo.BookInfo">
+        select
+        bookId,
+        bookName,
+        bookType,
+        latestChapters,
+        author,
+        articleLength,
+        updateTime,
+        currentState,
+        collectionNum,
+        totalClick,
+        totalRecommendedNum,
+        content,
+        bookAddressUrl,
+        bookIndexUrl,
+        bookImageUrl,
+        bookSource,
+        crawlingTime
+        from
+        book_info
+        where 1 = 1
+        <if test="null != bookName">
+            bookName = #{bookId},
+        </if>
+        <if test="null != bookName and '' != bookName">
+            bookName = #{bookName},
+        </if>
+        <if test="bookType != null and bookType != ''">
+            bookType = #{bookType},
+        </if>
+        <if test="latestChapters != null and latestChapters != ''">
+            latestChapters = #{latestChapters},
+        </if>
+        <if test="author != null and author != ''">
+            author = #{author},
+        </if>
+        <if test="articleLength != null and articleLength != ''">
+            articleLength = #{articleLength},
+        </if>
+        <if test="updateTime != null and updateTime != ''">
+            updateTime = #{updateTime},
+        </if>
+        <if test="currentState != null and currentState != ''">
+            currentState = #{currentState},
+        </if>
+        <if test="collectionNum != null and collectionNum != ''">
+            collectionNum = #{collectionNum},
+        </if>
+        <if test="totalClick != null and totalClick != ''">
+            totalClick = #{totalClick},
+        </if>
+        <if test="totalRecommendedNum != null and totalRecommendedNum != ''">
+            totalRecommendedNum = #{totalRecommendedNum},
+        </if>
+        <if test="content != null and content != ''">
+            content = #{content},
+        </if>
+        <if test="bookAddressUrl != null and bookAddressUrl != ''">
+            bookAddressUrl = #{bookAddressUrl},
+        </if>
+        <if test="bookIndexUrl != null and bookIndexUrl != ''">
+            bookIndexUrl = #{bookIndexUrl},
+        </if>
+        <if test="bookImageUrl != null and bookImageUrl != ''">
+            bookImageUrl = #{bookImageUrl},
+        </if>
+        <if test="bookSource != null and bookSource != ''">
+            bookSource = #{bookSource},
+        </if>
+        <if test="crawlingTime != null and crawlingTime != ''">
+            crawlingTime = #{crawlingTime}
+        </if>
+        ORDER BY updateTime desc
+    </select>
+
+
+    <select id="getCronMapLists" resultType="java.util.Map">
+        SELECT
+        s.id,
+        s.scheduleTaskName,
+        s.scheduleTaskNum,
+        s.scheduleTaskCorn,
+        s.createby,
+        s.createTime,
+        s.updateTime
+        FROM
+        schedule_task_job AS s
+        where 1=1
+        <if test="scheduleTaskName != null and scheduleTaskName != ''">
+            and scheduleTaskName = #{scheduleTaskName}
+        </if>
+        <if test="scheduleTaskNum != null">
+            and scheduleTaskNum = #{scheduleTaskNum}
+        </if>
+        <if test="createby != null and createby != ''">
+            and createby = #{createby}
+        </if>
+        <if test="createTime != null">
+            and createTime = #{createTime}
+        </if>
+        <if test="id != null">
+            and id = #{id}
+        </if>
+    </select>
+
+    <update id="updateScheduledTime" parameterType="map">
+        update schedule_task_job set  updateTime = now() where scheduleTaskNum = #{scheduleTaskNum}
+    </update>
+
+</mapper>
