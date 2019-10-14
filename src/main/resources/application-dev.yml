@@ -9,14 +9,14 @@ spring:
         login-password: scs
       # 主库数据源
       master:
-        url: jdbc:mysql://localhost:3306/scs_top?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/worm_reading?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true&serverTimezone=UTC
         username: root
         password: root
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
-        #  enabled: false
-        url: jdbc:mysql://localhost:3306/worm_reading?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true&serverTimezone=UTC
+        enabled: false
+        url: jdbc:mysql://localhost:3306/scs_top?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&allowMultiQueries=true&serverTimezone=UTC
         username: root
         password: root
       # 初始连接数
