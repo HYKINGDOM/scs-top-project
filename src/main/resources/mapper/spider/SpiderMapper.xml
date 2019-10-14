@@ -27,7 +27,7 @@
 
 
     <insert id="saveBookInfoData" parameterType="com.scs.top.project.module.spider.pojo.BookInfo">
-        replace into book_info(
+        replace into worm_book_info(
         bookId,
         bookName,
         <if test="bookType != null and bookType != ''">
@@ -124,7 +124,7 @@
 
 
     <insert id="saveBookInfoDataLists" parameterType="com.scs.top.project.module.spider.pojo.BookInfo">
-        replace into book_info(
+        replace into worm_book_info(
         bookId,
         bookName,
         <if test="bookType != null and bookType != ''">
@@ -225,7 +225,7 @@
 
 
     <insert id="saveBookChapter" parameterType="list" keyProperty="id" useGeneratedKeys="true">
-        insert into book_chapter(
+        insert into worm_book_chapter(
         bookId,
         chapterNameNum,
         chapterName,
@@ -249,7 +249,7 @@
 
     <insert id="saveBookChapterOne" parameterType="com.scs.top.project.module.spider.pojo.BookChapter"
             keyProperty="id" useGeneratedKeys="true">
-        insert into book_chapter(
+        insert into worm_book_chapter(
         bookId,
         chapterNameNum,
         chapterName,
@@ -278,7 +278,7 @@
         chapterContentNum,
         chapterContent,
         DATE_FORMAT(updateTime,'%Y-%m-%d %H:%i:%S') as preservetime
-        FROM book_chapter
+        FROM worm_book_chapter
 
         where 1=1
         <if test="bookId != null and bookId != 0">
@@ -307,7 +307,7 @@
         bookSource,
         crawlingTime
         from
-        book_info
+        worm_book_info
         where 1 = 1
         <if test="null != bookName">
             bookName = #{bookId},
