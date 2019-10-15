@@ -1,4 +1,4 @@
-package com.scs.top.project.module.scs.pojo;
+package com.scs.top.project.module.codereview.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Date;
  * @author yihur
  */
 @Data
-public class ScsHome {
+public class CodeReviewHome {
 
     /**
      * 列表Id
