@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scs.top.project.module.scs.mapper.ScsMapper">
+
+
+    <select id="queryScsCodeReview" resultType="java.util.Map">
+        SELECT id, codeReviewId, codeText, createBy, createTime, updateBy, updateTime
+            FROM scs_code_review_content;
+    </select>
+
+
+</mapper>

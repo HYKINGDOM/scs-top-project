@@ -80,7 +80,7 @@ public class SpiderServiceImpl implements SpiderService {
 
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public List<BookChapter> getBookContentInfoByBookIdAndChapter(BookInfo bookInfo) {
         long bookId = createBookId();
         bookInfo.setBookId(bookId);
@@ -102,7 +102,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public List<BookChapter> getTestBookContentInfoByBookIdAndChapter(BookInfo bookInfo) {
         String bookAddressUrl = bookInfo.getBookIndexUrl();
 
@@ -134,7 +134,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public PageInfo<BookInfo> getBookInfoHomePage(int pageNum, int pageSize, BookInfo bookInfo) {
         PageHelper.startPage(pageNum, pageSize);
         List<BookInfo> bookInfos = null;
@@ -156,7 +156,8 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
+    @Transactional(value = TransactionConfig.FIRST_TX, rollbackFor = Exception.class)
     public Map<String, Object> getCronMapLists() {
         Map<String, Object> param = Maps.newHashMapWithExpectedSize(2);
         param.put("scheduleTaskNum", 101);
@@ -167,7 +168,8 @@ public class SpiderServiceImpl implements SpiderService {
      * 获取首页推荐书籍信息，并存入数据库
      */
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
+    @Transactional(value = TransactionConfig.FIRST_TX, rollbackFor = Exception.class)
     public void getBookInfoUrl() {
         String bookWebSiteUrl = "https://www.x23us.com/";
         Document htmlDocument = getHtmlDocumentPost(bookWebSiteUrl);
@@ -195,7 +197,7 @@ public class SpiderServiceImpl implements SpiderService {
     }
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public void updateScheduledTime(Map<String, Object> param) {
         spiderMapper.updateScheduledTime(param);
     }

@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.scs.top.project.common.constant.RedisConstans;
 import com.scs.top.project.framework.druid.DataSourceTransaction;
-import com.scs.top.project.framework.druid.TransactionConfig;
 import com.scs.top.project.framework.redis.RedisUtil;
 import com.scs.top.project.module.spider.pojo.BookChapter;
 import com.scs.top.project.module.spider.pojo.BookInfo;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
     private RedisUtil redisUtil;
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public void testBookInfo() {
 
         BookInfo bookInfo = new BookInfo();
@@ -134,7 +132,7 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
 
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public List<BookInfo> getBookContentInfoByBookIdAndChapter(String bookName) {
 
         List<BookInfo> bookChapterList = new ArrayList<>();
@@ -192,7 +190,7 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
 
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public BookChapter searchBookInfoReturnFirstChapterInfo(BookInfo bookInfo) {
         Long bookId = bookInfo.getBookId();
         String redisKey = bookId.toString() + "-00001";
@@ -243,7 +241,7 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
 
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public List<Map<String, Object>> searchBookInfoReturnChapterIndex(BookInfo bookInfo) {
         String bookInfoIndex = bookInfo.getBookId().toString() + "-index";
         List<Map<String, Object>> list = null;
@@ -259,7 +257,7 @@ public class SpiderSearchServiceImpl implements SpiderSearchService {
     }
 
     @Override
-    @DataSourceTransaction(name="second")
+    @DataSourceTransaction(name="first")
     public BookChapter searchBookInfoReturnAnyChapterInfo(BookInfo bookInfo, String chapterIndex) {
         long bookId = bookInfo.getBookId();
         String redisKey = bookId + "-" + returnUrlSwitch(chapterIndex);
