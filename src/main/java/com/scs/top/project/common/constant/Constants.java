@@ -7,9 +7,9 @@ package com.scs.top.project.common.constant;
 public class Constants {
 
     /**
-     * 软通邮箱地址
+     * 邮箱地址
      */
-    public static final String ISOFT_EMAIL_ADDRESS = "@isoftstone.com";
+    public static final String ISOFT_EMAIL_ADDRESS = "@163.com";
 
     /**
      * 数据异常

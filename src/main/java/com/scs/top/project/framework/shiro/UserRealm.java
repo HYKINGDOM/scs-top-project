@@ -1,12 +1,7 @@
 package com.scs.top.project.framework.shiro;
 
-import com.isoftstone.pmit.common.util.DateUtils;
-import com.isoftstone.pmit.common.util.StringUtils;
-import com.isoftstone.pmit.system.menu.service.MenuService;
-import com.isoftstone.pmit.system.role.service.IRoleService;
-import com.isoftstone.pmit.system.user.entity.User;
-import com.isoftstone.pmit.system.user.service.IUserService;
-import com.scs.top.project.common.util.StringUtils;
+
+import com.scs.top.project.module.scs.pojo.SysUserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -15,10 +10,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.isoftstone.pmit.framework.shiro.ShiroUtils.isAdminister;
 import static com.scs.top.project.framework.shiro.ShiroUtils.isAdminister;
 
 /**
@@ -39,15 +32,6 @@ public class UserRealm extends AuthorizingRealm {
 //
 //    @Autowired
 //    private IUserService IUserService;
-
-    /**
-     * ipsa登录的接口
-     */
-    public static final String IPSA_URL = "https://passport.isoftstone.com/?DomainUrl=http://ipsapro.isoftstone.com&Ret&ReturnUrl=%2fPortal#";
-    /**
-     * 登录成功后返回的地址
-     */
-    public static final String IPSA_RETURN_URL = "http://ipsapro.isoftstone.com/Portal";
 
     /**
      * 授权
@@ -85,16 +69,10 @@ public class UserRealm extends AuthorizingRealm {
 
 
 
-        User user = null;
+        SysUserInfo user = null;
             // 查询用户信息
-            user = IUserService.selectUserByLoginName(userAccount);
-            if (!StringUtils.isNotNull(user)) {
-                //用户不存在,将从pmoit.ipsaInfo 表中获取数据
-                user = IUserService.selectPmoitUserByLoginName(userAccount);
-                //throw new UnknownAccountException("用户账户没有权限");
-            }
 
-        return new SimpleAuthenticationInfo(user.getUserAccount(), password, user.getUserName());
+        return new SimpleAuthenticationInfo(user.getSingleCode(), password, user.getUserName());
     }
 
     /**
@@ -108,11 +86,11 @@ public class UserRealm extends AuthorizingRealm {
     /**
      * 记录登录信息
      */
-    private void recordLoginInfo(User user) {
-        user.setLoginIp(ShiroUtils.getIp());
-        user.setLoginDate(DateUtils.getNowDate());
-        user.setUpdateBy(user.getUserAccount());
-        IUserService.updateUser(user);
-    }
+//    private void recordLoginInfo(User user) {
+//        user.setLoginIp(ShiroUtils.getIp());
+//        user.setLoginDate(DateUtils.getNowDate());
+//        user.setUpdateBy(user.getUserAccount());
+//        IUserService.updateUser(user);
+//    }
 
 }

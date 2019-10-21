@@ -48,7 +48,7 @@ public class ShiroUtils {
         if (user == null) {
             return false;
         }
-        Integer dateSource = user.getCurrentRole().getDataScope();
+        Integer dateSource = 1;
         if (dateSource == 1) {
             flag = true;
         }
