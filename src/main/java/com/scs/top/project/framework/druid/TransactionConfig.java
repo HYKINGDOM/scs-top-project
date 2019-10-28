@@ -23,15 +23,13 @@ public class TransactionConfig {
 
     @Primary
     @Bean(name= TransactionConfig.FIRST_TX)
-    public PlatformTransactionManager firstTxTransaction(@Qualifier(DataSourceNames.FIRST) DataSource masterDataSource){
-        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(masterDataSource);
-        return dataSourceTransactionManager;
+    public PlatformTransactionManager firstTxTransaction(@Qualifier("DynamicDataSource") DynamicDataSource masterDataSource){
+        return new DataSourceTransactionManager(masterDataSource);
     }
 
     @Bean(name= TransactionConfig.SECOND_TX)
-    public PlatformTransactionManager secondTxTransaction(@Qualifier(DataSourceNames.SECOND) DataSource slaveDataSource){
-        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(slaveDataSource);
-        return dataSourceTransactionManager;
+    public PlatformTransactionManager secondTxTransaction(@Qualifier("DynamicDataSource") DynamicDataSource slaveDataSource){
+        return new DataSourceTransactionManager(slaveDataSource);
     }
 
 

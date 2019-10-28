@@ -34,6 +34,7 @@ import java.util.Map;
 
 /**
  * Shiro的配置文件
+ * @author Administrator
  */
 @Configuration
 public class ShiroConfig {
@@ -67,9 +68,8 @@ public class ShiroConfig {
      * 自定义Realm
      */
     @Bean
-    public UserRealm userRealm(EhCacheManager cacheManager) {
-        UserRealm userRealm = new UserRealm();
-        userRealm.setCacheManager(cacheManager);
+    public UserRealm userRealm(UserRealm userRealm) {
+        userRealm.setCacheManager(getEhCacheManager());
         return userRealm;
     }
 
@@ -77,7 +77,6 @@ public class ShiroConfig {
     /**
      * 单机环境，session交给shiro管理
      */
-    @Bean
     @ConditionalOnProperty(prefix = "PMIT", name = "cluster", havingValue = "false")
     public DefaultWebSessionManager sessionManager() {
         long globalSessionTimeout = Long.parseLong(PropertyUtil.getProperty("globalSessionTimeout").trim());
@@ -96,16 +95,6 @@ public class ShiroConfig {
     }
 
 
-    @Bean("securityManager")
-    public SecurityManager securityManager(UserRealm userRealm, SessionManager sessionManager) {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(userRealm);
-        securityManager.setSessionManager(sessionManager);
-        securityManager.setRememberMeManager(rememberMeManager());
-        securityManager.setCacheManager(getEhCacheManager());
-
-        return securityManager;
-    }
 
     /**
      * 记住我
@@ -132,7 +121,6 @@ public class ShiroConfig {
     /**
      * 缓存管理器 使用Ehcache实现
      */
-    @Bean
     public EhCacheManager getEhCacheManager() {
         net.sf.ehcache.CacheManager cacheManager = net.sf.ehcache.CacheManager.getCacheManager("pmit");
         EhCacheManager em = new EhCacheManager();
@@ -147,7 +135,7 @@ public class ShiroConfig {
 
     /**
      * shiro过滤器配置
-     * @param securityManager
+     //     * @param securityManager
      * @return
      */
     @Bean("shiroFilter")
@@ -167,6 +155,7 @@ public class ShiroConfig {
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/v2/**", "anon");
         filterMap.put("/swagger-resources/**", "anon");
+
         // 退出 logout地址，shiro去清除session
         filterMap.put("/logout", "logout");
         // 不需要拦截的访问
@@ -203,7 +192,7 @@ public class ShiroConfig {
      * @创建时间：2018年4月24日 下午8:14:28
      * @return
      */
-    @Bean
+//    @Bean
     public KickoutSessionFilter kickoutSessionFilter(){
         KickoutSessionFilter kickoutSessionFilter = new KickoutSessionFilter();
         //使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的；
@@ -229,16 +218,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
-        proxyCreator.setProxyTargetClass(true);
-        return proxyCreator;
-    }
-
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
         return advisor;
     }
 
@@ -292,6 +273,16 @@ public class ShiroConfig {
     @Bean(name = "exceptionHandler")
     public HandlerExceptionResolver handlerExceptionResolver() {
         return new OverallExceptionHandler();
+    }
+
+    @Bean("securityManager")
+    public SecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setSessionManager(sessionManager());
+        securityManager.setRememberMeManager(rememberMeManager());
+        securityManager.setCacheManager(getEhCacheManager());
+
+        return securityManager;
     }
 
 }

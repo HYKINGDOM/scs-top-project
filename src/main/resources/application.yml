@@ -1,4 +1,7 @@
 
+
+
+
 scs:
   name: scs
   version: 1.0
@@ -11,6 +14,8 @@ spring:
     name: scs-top-project
   profiles:
     active: dev
+  main:
+    allow-bean-definition-overriding: true
 
 mybatis:
   # 对应的实体类的包路径

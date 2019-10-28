@@ -2,6 +2,7 @@ package com.scs.top.project.framework.shiro.kickoutfilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scs.top.project.common.util.PropertyUtil;
+import com.scs.top.project.module.scs.pojo.SysUserInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.Session;
@@ -23,8 +24,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 import static com.scs.top.project.common.util.IpUtils.getIpAddr;
-import static com.scs.top.project.framework.shiro.ShiroUtils.getSession;
-import static com.scs.top.project.framework.shiro.ShiroUtils.getSubjct;
+import static com.scs.top.project.framework.shiro.ShiroUtils.*;
 
 /**
  * 自定义过滤器，进行用户访问控制
@@ -116,8 +116,8 @@ public class KickoutSessionFilter extends AccessControlFilter {
         logger.info("==session时间设置：" + (session.getTimeout()) + "===========");
         try {
             // 当前用户
-            User user = getSysUser();
-            String userAccount = user.getUserAccount();
+            SysUserInfo user = getSysUser();
+            String userAccount = user.getUserName();
             logger.info("===当前用户username：==" + userAccount);
             Serializable sessionId = session.getId();
             logger.info("===当前用户sessionId：==" + sessionId);

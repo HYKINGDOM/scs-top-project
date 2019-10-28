@@ -77,7 +77,7 @@ public class DruidConfig {
         return reg;
     }
 
-    @Bean
+    @Bean(name = "DynamicDataSource")
     @Primary
     public DynamicDataSource dataSource(@Qualifier("first") DataSource masterDataSource, @Qualifier("second") DataSource slaveDataSource) {
         Map<String, DataSource> targetDataSources = new HashMap<>(2);

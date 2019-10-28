@@ -2,6 +2,7 @@ package com.scs.top.project.framework.shiro;
 
 
 import com.scs.top.project.module.scs.pojo.SysUserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -19,19 +20,10 @@ import static com.scs.top.project.framework.shiro.ShiroUtils.isAdminister;
  *
  * @author admin
  */
+@Slf4j
 @Component
 public class UserRealm extends AuthorizingRealm {
 
-    private static final Logger log = LoggerFactory.getLogger(UserRealm.class);
-
-//    @Autowired
-//    private MenuService menuService;
-//
-//    @Autowired
-//    private IRoleService IRoleService;
-//
-//    @Autowired
-//    private IUserService IUserService;
 
     /**
      * 授权
@@ -69,7 +61,7 @@ public class UserRealm extends AuthorizingRealm {
 
 
 
-        SysUserInfo user = null;
+        SysUserInfo user = new SysUserInfo();
             // 查询用户信息
 
         return new SimpleAuthenticationInfo(user.getSingleCode(), password, user.getUserName());
@@ -83,14 +75,5 @@ public class UserRealm extends AuthorizingRealm {
     }
 
 
-    /**
-     * 记录登录信息
-     */
-//    private void recordLoginInfo(User user) {
-//        user.setLoginIp(ShiroUtils.getIp());
-//        user.setLoginDate(DateUtils.getNowDate());
-//        user.setUpdateBy(user.getUserAccount());
-//        IUserService.updateUser(user);
-//    }
 
 }
